@@ -6,6 +6,7 @@ from urllib import request, error, parse
 from threading import Thread
 import json
 import time
+import copy
 import os
 
 
@@ -149,8 +150,8 @@ class OneDrive:
     @staticmethod
     def accessData(grantType, redirectUri='http://localhost/onedrive-login'):
         return {
-            'client_id': 'ea2b36f6-b8ad-40be-bc0f-e5e4a4a7d4fa',
-            'client_secret': 'h27zG8pr8BNsLU0JbBh5AOznNS5Of5Y540l/koc7048=',
+            'client_id': '78d4dc35-7e46-42c6-9023-2d39314433a5',
+            'client_secret': 'ZudGl-p.m=LMmr3VrKgAyOf-WevB3p50',
             'redirect_uri': redirectUri,
             'grant_type': grantType,
             "scope": "User.Read Files.ReadWrite.All"
@@ -174,7 +175,11 @@ class OneDrive:
             setRoot = "/drive/root:/"
         else:
             setRoot = "/"
-        return str("{}{}").format(setRoot, newPath)
+        iPath = str("{}{}").format(setRoot, newPath)
+        if iPath != "/":
+            return iPath.rstrip("/")
+        else:
+            return "/"
 
     def findCache(self, path, useCache=0):
         path = self.urlPath(path, hasRoot=True)
@@ -292,7 +297,7 @@ class OneDrive:
             if NotInCache and not isFolder:
                 self.listItem(path)
         else:
-            if NotInCache or Utils.getTime(cache['@time']) > timeOut:
+            if NotInCache or Utils.getTime(cache['@time']) >= timeOut:
                 self.listItem(path)
         return isFolder
 
@@ -321,11 +326,13 @@ class OneDrive:
     def checkFile(self):
         if not self.cacheUrl:
             return
-        tmpCache = self.cacheUrl.copy()
+        tmpCache = copy.deepcopy(self.cacheUrl)
         for parentItem in tmpCache:
+            if not tmpCache[parentItem]:
+                del self.cacheUrl[parentItem]
             for Item in tmpCache[parentItem]:
                 try:
-                    if Utils.getTime(tmpCache[parentItem][Item]['@time']) > self.FileRefresh:
+                    if Utils.getTime(tmpCache[parentItem][Item]['@time']) >= self.FileRefresh:
                         del self.cacheUrl[parentItem][Item]
                 except:
                     continue

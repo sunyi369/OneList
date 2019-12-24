@@ -1,4 +1,11 @@
 # 开始使用 (测试版,更新中...)
+## 已知问题
+- 文件夹内超过200个文件问题
+- 刷新缓存时卡顿
+## 已有特征
+- 单html,无第三方引用
+- 按文件日期排序/倒序
+
 ## 所需依赖
 ```
 # 自行安装 python3
@@ -6,7 +13,7 @@ pip3 install tornado
 ```
 
 ## 通过下面URL登录 (右键新标签打开)
-[https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=ea2b36f6-b8ad-40be-bc0f-e5e4a4a7d4fa&response_type=code&redirect_uri=http://localhost/onedrive-login&response_mode=query&scope=offline_access%20User.Read%20Files.ReadWrite.All](https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=ea2b36f6-b8ad-40be-bc0f-e5e4a4a7d4fa&response_type=code&redirect_uri=http://localhost/onedrive-login&response_mode=query&scope=offline_access%20User.Read%20Files.ReadWrite.All)
+[https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=78d4dc35-7e46-42c6-9023-2d39314433a5&response_type=code&redirect_uri=http://localhost/onedrive-login&response_mode=query&scope=offline_access%20User.Read%20Files.ReadWrite.All](https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=78d4dc35-7e46-42c6-9023-2d39314433a5&response_type=code&redirect_uri=http://localhost/onedrive-login&response_mode=query&scope=offline_access%20User.Read%20Files.ReadWrite.All)
 
 ## 初始化配置文件
 ```
